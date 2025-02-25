@@ -2,6 +2,13 @@
 
 Alpha-GPT is an advanced Human-AI collaborative framework designed for **Quantitative Investment**. It leverages cutting-edge tools like **LangGraph**, **Zipline**, **Alphalens**, and **PyGAD** to generate, evaluate, and optimize financial trading strategies (alphas). 
 
+
+## 🚧 Project Status: Under Development 🚧  
+
+This repository is currently a **work in progress**. The latest code updates are not yet fully pushed to GitHub but will be available soon.  
+
+Feel free to explore the current implementation, and if you have any questions, **contact me**.
+
 ---
 
 ## **Research Acknowledgments**
