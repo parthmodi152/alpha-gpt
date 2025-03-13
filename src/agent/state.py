@@ -1,16 +1,20 @@
-"""Define the state structures for the agent."""
-
-from __future__ import annotations
-
-from dataclasses import dataclass
-from typing import Any, List
+# src/agent/state.py
+from dataclasses import dataclass, field
+from typing import List, Dict, Any, Optional
 
 
 @dataclass
 class State:
-    """Defines the input state for the agent."""
+    """Define the state for alpha generation workflow."""
 
+    # Input/Output
     trading_idea: str = ""
-    retrieved_examples: List[str] = None
-    generated_alphas: dict = None
-    validated_alphas: dict = None
+    hypothesis: str = ""
+
+    # Alpha generation
+    seed_alphas: List[Dict[str, Any]] = field(default_factory=list)
+    coded_alphas: List[Dict[str, Any]] = field(default_factory=list)
+
+    # For future SOTA tracking
+    sota_alphas: List[Dict[str, Any]] = field(default_factory=list)
+    feedback: Optional[Dict[str, Any]] = None

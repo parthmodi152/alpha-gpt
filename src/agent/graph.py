@@ -1,26 +1,28 @@
+# src/agent/graph.py
 from langgraph.graph import StateGraph
 from agent.configuration import Configuration
 from agent.state import State
-from agent.nodes.user_input_node import user_input_node
-from agent.nodes.knowledge_retrieval_node import knowledge_retrieval_node
-from agent.nodes.generate_seed_alphas_node import generate_seed_alphas_node
-from agent.nodes.thought_decompiler_node import thought_decompiler_node
+from agent.agents.user_input_agent import user_input_agent
+from agent.agents.hypothesis_agent import hypothesis_agent
+from agent.agents.alpha_generator_agent import alpha_generator_agent
+from agent.agents.alpha_coder_agent import alpha_coder_agent
 
 # Define the graph workflow
 workflow = StateGraph(State, config_schema=Configuration)
 
-# Add nodes to the graph
-workflow.add_node("user_input", user_input_node)
-workflow.add_node("knowledge_retrieval", knowledge_retrieval_node)
-workflow.add_node("generate_seed_alphas", generate_seed_alphas_node)
-workflow.add_node("thought_decompiler", thought_decompiler_node)
+# Add agents to the graph
+workflow.add_node("user_input", user_input_agent)
+workflow.add_node("hypothesis_generator", hypothesis_agent)
+workflow.add_node("alpha_generator", alpha_generator_agent)
+workflow.add_node("alpha_coder", alpha_coder_agent)
 
-# Connect the nodes
+# Connect the agents
 workflow.add_edge("__start__", "user_input")
-workflow.add_edge("user_input", "knowledge_retrieval")
-workflow.add_edge("knowledge_retrieval", "generate_seed_alphas")
-workflow.add_edge("generate_seed_alphas", "thought_decompiler")
+workflow.add_edge("user_input", "hypothesis_generator")
+workflow.add_edge("hypothesis_generator", "alpha_generator")
+workflow.add_edge("alpha_generator", "alpha_coder")
+workflow.add_edge("alpha_coder", "__end__")
 
 # Compile the graph
 graph = workflow.compile()
-graph.name = "Alpha Generation Workflow with RAG and Structured Output"
+graph.name = "Alpha Generation and Coding Workflow"
